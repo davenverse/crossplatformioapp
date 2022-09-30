@@ -24,7 +24,7 @@ val munitCatsEffectV = "2.0.0-M3"
 
 // Projects
 lazy val `CrossPlatformIOApp` = tlCrossRootProject
-  .aggregate(core)
+  .aggregate(core, example)
 
 lazy val core = crossProject(JVMPlatform, JSPlatform, NativePlatform)
   .crossType(CrossType.Full)
@@ -42,3 +42,34 @@ lazy val core = crossProject(JVMPlatform, JSPlatform, NativePlatform)
   ).nativeSettings(
     libraryDependencies += "com.armanbilge" %%% "epollcat" % "0.1.1"
   )
+
+val isLinux = Option(System.getProperty("os.name")).exists(_.toLowerCase().contains("linux"))
+val isMacOs = Option(System.getProperty("os.name")).exists(_.toLowerCase().contains("mac"))
+val isArm = Option(System.getProperty("os.arch")).exists(_.toLowerCase().contains("aarch64"))
+
+lazy val example = crossProject(JVMPlatform, JSPlatform, NativePlatform)
+  .crossType(CrossType.Pure)
+  .enablePlugins(NoPublishPlugin)
+  .dependsOn(core)
+  .in(file("example"))
+  .jsSettings(
+    scalaJSUseMainModuleInitializer := true,
+  )
+  .nativeSettings(
+    nativeConfig ~= { c =>
+      if (isLinux) { // brew-installed s2n
+        c.withLinkingOptions(c.linkingOptions :+ "-L/home/linuxbrew/.linuxbrew/lib")
+      } else if (isMacOs) // brew-installed OpenSSL
+        if(isArm) c.withLinkingOptions(c.linkingOptions :+ "-L/opt/homebrew/opt/openssl@3/lib")
+        else c.withLinkingOptions(c.linkingOptions :+ "-L/usr/local/opt/openssl@3/lib")
+      else c
+    },
+    envVars ++= {
+      val ldLibPath =
+        if (isLinux)
+          Map("LD_LIBRARY_PATH" -> "/home/linuxbrew/.linuxbrew/lib")
+        else Map("LD_LIBRARY_PATH" -> "/usr/local/opt/openssl@1.1/lib")
+      Map("S2N_DONT_MLOCK" -> "1") ++ ldLibPath
+    }
+  )
+
