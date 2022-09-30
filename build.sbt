@@ -54,6 +54,7 @@ lazy val example = crossProject(JVMPlatform, JSPlatform, NativePlatform)
   .in(file("example"))
   .jsSettings(
     scalaJSUseMainModuleInitializer := true,
+    scalaJSLinkerConfig ~= (_.withModuleKind(ModuleKind.CommonJSModule)),
   )
   .nativeSettings(
     nativeConfig ~= { c =>
