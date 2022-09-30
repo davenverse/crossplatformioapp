@@ -1,0 +1,5 @@
+package io.chrisdavenport.crossplatformioapp
+
+private[crossplatformioapp] trait CrossPlatformIOAppPlatform extends epollcat.EpollApp
+
+private[crossplatformioapp] trait CrossPlatformIOAppSimplePlatform extends epollcat.EpollApp.Simple
