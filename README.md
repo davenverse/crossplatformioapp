@@ -7,7 +7,7 @@ To use CrossPlatformIOApp in an existing SBT project with Scala 2.13 or a later 
 
 ```scala
 libraryDependencies ++= Seq(
-  "io.chrisdavenport" %% "CrossPlatformIOApp" % "<version>"
+  "io.chrisdavenport" %% "crossplatformioapp" % "<version>"
 )
 ```
 
