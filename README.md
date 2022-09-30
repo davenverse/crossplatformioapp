@@ -13,7 +13,7 @@ libraryDependencies ++= Seq(
 
 Use is super straightforward, use exactly like IOApp/IOApp.Simple but automatically get working app for scala-native with epollcat.
 
-```
+```scala
 import io.chrisdavenport.crossplatformioapp.CrossPlatformIOApp
 
 object Main extends CrossPlatformIOApp.Simple {
