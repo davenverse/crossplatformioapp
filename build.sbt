@@ -10,7 +10,7 @@ ThisBuild / tlCiReleaseBranches := Seq("main")
 ThisBuild / tlSonatypeUseLegacyHost := true
 
 
-val Scala213 = "2.13.8"
+val Scala213 = "2.13.10"
 
 ThisBuild / crossScalaVersions := Seq("2.12.17", Scala213, "3.1.3")
 ThisBuild / scalaVersion := Scala213
