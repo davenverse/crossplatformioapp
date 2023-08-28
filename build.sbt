@@ -40,7 +40,7 @@ lazy val core = crossProject(JVMPlatform, JSPlatform, NativePlatform)
   ).jsSettings(
     scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule)},
   ).nativeSettings(
-    libraryDependencies += "com.armanbilge" %%% "epollcat" % "0.1.1"
+    libraryDependencies += "com.armanbilge" %%% "epollcat" % "0.1.6"
   )
 
 val isLinux = Option(System.getProperty("os.name")).exists(_.toLowerCase().contains("linux"))
