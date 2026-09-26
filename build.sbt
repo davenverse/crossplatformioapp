@@ -11,14 +11,14 @@ ThisBuild / tlCiReleaseBranches := Seq()
 
 val Scala213 = "2.13.18"
 
-ThisBuild / crossScalaVersions := Seq("2.12.17", Scala213, "3.3.8")
+ThisBuild / crossScalaVersions := Seq(Scala213, "3.3.8")
 ThisBuild / scalaVersion := Scala213
 
 ThisBuild / testFrameworks += new TestFramework("munit.Framework")
 
-val catsV = "2.8.0"
-val catsEffectV = "3.3.14"
-val munitCatsEffectV = "2.0.0-M3"
+val catsV = "2.13.0"
+val catsEffectV = "3.7.1"
+val munitCatsEffectV = "2.2.1"
 
 
 // Projects
@@ -38,8 +38,6 @@ lazy val core = crossProject(JVMPlatform, JSPlatform, NativePlatform)
     )
   ).jsSettings(
     scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule)},
-  ).nativeSettings(
-    libraryDependencies += "com.armanbilge" %%% "epollcat" % "0.1.1"
   )
 
 val isLinux = Option(System.getProperty("os.name")).exists(_.toLowerCase().contains("linux"))
